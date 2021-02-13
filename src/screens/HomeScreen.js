@@ -4,7 +4,16 @@ import { Text, StyleSheet, View, Button, TouchableOpacity } from 'react-native';
 const HomeScreen = (props) => {
   return (
     <View>
-      <Text>Home page</Text>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('SignUpStudent')}
+      >
+        <Text>Go to student sign up page</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => props.navigation.navigate('SignUpCompany')}
+      >
+        <Text>Go to company sign up page</Text>
+      </TouchableOpacity>
     </View>
   );
 };
