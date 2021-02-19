@@ -20,30 +20,26 @@ const LoginScreen = (props) => {
         />
       </View>
       <View style={styles.textFieldContainer}>
-        <Text style={styles.text}>Username:</Text>
+        <Text style={styles.textField}>Username:</Text>
         <TextInput
           style={styles.input}
           autoCapitalize='none'
           autoCorrect={false}
         />
-        <Text style={styles.text}>Password:</Text>
+        <Text style={styles.textField}>Password:</Text>
         <TextInput
           style={styles.input}
           autoCapitalize='none'
           autoCorrect={false}
           value={password}
           onChangeText={(newValue) => setPassword(newValue)}
+          secureTextEntry={true}
         />
         {password.length < 8 ? (
           <Text style={styles.passwordWarning}>
             Password must be at least 8 characters
           </Text>
         ) : null}
-        <TouchableOpacity
-        //onPress={() => props.navigation.navigate('Home')}
-        >
-          <Text style={styles.forgotPassword}>Forgot password?</Text>
-        </TouchableOpacity>
       </View>
       <View>
         <TouchableOpacity
@@ -51,6 +47,32 @@ const LoginScreen = (props) => {
           onPress={() => props.navigation.navigate('Home')}
         >
           <Text style={styles.button}>Login</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.altLoginContainer}>
+        <Image
+          source={require('../../assets/google-logo.png')}
+          style={styles.logo}
+        />
+        <Image
+          source={require('../../assets/linkedin-logo.png')}
+          style={styles.logo}
+        />
+        <Image
+          source={require('../../assets/github-logo.png')}
+          style={styles.logo}
+        />
+      </View>
+      <View style={styles.forgotContainer}>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate('ForgotUsername')}
+        >
+          <Text style={styles.forgotPassword}>Forgot username?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => props.navigation.navigate('ForgotPassword')}
+        >
+          <Text style={styles.forgotPassword}>Forgot password?</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.signupContainer}>
@@ -70,10 +92,9 @@ const LoginScreen = (props) => {
   );
 };
 
-// Palette: https://www.color-hex.com/color-palette/5085
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgb(242,229,150)',
+    backgroundColor: '#FDF4EE',
     ...StyleSheet.absoluteFillObject,
   },
   imageContainer: {
@@ -88,9 +109,9 @@ const styles = StyleSheet.create({
   },
   textFieldContainer: {
     height: 200,
-    marginBottom: 20,
+    marginBottom: 10,
   },
-  text: {
+  textField: {
     fontSize: 15,
     marginLeft: 10,
   },
@@ -99,25 +120,18 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     padding: 5,
+    borderRadius: 5,
   },
   passwordWarning: {
     color: 'red',
     fontSize: 12,
     marginLeft: 10,
   },
-  forgotPassword: {
-    alignSelf: 'flex-end',
-    fontSize: 13,
-    color: 'blue',
-    textDecorationLine: 'underline',
-    marginRight: 15,
-    marginTop: -18,
-  },
   buttonContainer: {
-    marginBottom: 60,
+    marginBottom: 30,
     alignSelf: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgb(146,88,0)',
+    backgroundColor: '#7A6C83',
     borderRadius: 20,
     padding: 5,
     width: '60%',
@@ -127,9 +141,31 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center',
   },
+  altLoginContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginLeft: 100,
+    marginRight: 100,
+    marginBottom: 20,
+  },
+  logo: {
+    height: 30,
+    width: 30,
+  },
+  forgotContainer: {
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  forgotPassword: {
+    alignSelf: 'flex-end',
+    fontSize: 13,
+    color: 'blue',
+    textDecorationLine: 'underline',
+  },
   signupContainer: {
     fontSize: 15,
-    marginTop: 30,
+    marginTop: 20,
     alignItems: 'center',
   },
   signup: {
