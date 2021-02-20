@@ -10,7 +10,6 @@ import {
 
 const LoginScreen = (props) => {
   const [password, setPassword] = useState('');
-
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
