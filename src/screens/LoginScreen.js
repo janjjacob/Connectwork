@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 200,
+    height: 150,
   },
   image: {
     height: 100,
