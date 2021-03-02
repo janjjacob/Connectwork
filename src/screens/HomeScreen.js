@@ -1,14 +1,115 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import {  
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,} from 'react-native';
 
 const HomeScreen = () => {
   return (
-    <View>
-      <Text>Home Screen</Text>
+    <View style={styles.container}>
+      <ScrollView style={styles.textFieldContainer}>
+        <Text style={styles.textField}>Search: </Text>
+        <TextInput
+          style={styles.input}
+          autoCapitalize='none'
+          autoCorrect={false}
+        />
+        <Image
+          source={require('../../assets/ben-lerner.png')}
+          style={styles.image}
+        />
+        <Image
+          source={require('../../assets/ben-lerner.png')}
+          style={styles.image}
+        />
+        </ScrollView>
+
+        <View style={styles.altPages}>
+        <TouchableOpacity style={styles.altPages} onPress={()=>{alert("next page")}}>
+          <Image 
+            source={require("../../assets/chat.png")}
+            style={styles.logo}
+          />
+          <View style={styles.space} />
+          <Image 
+            source={require("../../assets/make-group.png")}
+            style={styles.logo}
+          />
+          <View style={styles.space} />
+          <Image 
+            source={require("../../assets/add-post.png")}
+            style={styles.logo}
+          />
+          <View style={styles.space} />
+          <Image 
+            source={require("../../assets/default_pfp.png")}
+            style={styles.logo}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#FDF4EE',
+    ...StyleSheet.absoluteFillObject,
+  },
+  imageContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 200,
+  },
+  altPages: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 20,
+  },
+  logo: {
+    height: 30,
+    width: 30,
+  },
+  image: {
+    flex: 1,
+    flexDirection: 'column',
+    width: 340,
+    borderRadius: 0,
+  },
+  textFieldContainer: {
+    height: 200,
+    marginLeft: 10,
+  },
+  textField: {
+    fontSize: 15,
+    marginLeft: 10,
+  },
+  input: {
+    margin: 15,
+    borderColor: 'black',
+    borderWidth: 1,
+    padding: 5,
+    borderRadius: 5,
+  },
+  button: {
+    backgroundColor: '#FDF4EE',
+    borderRadius: 30,
+    padding: 10,
+    marginBottom: 0,
+    flex: 1,
+    flexDirection: 'row',
+  },
+  space: {
+    width: 55, 
+    height: 20,
+  },
+});
+
 
 export default HomeScreen;
