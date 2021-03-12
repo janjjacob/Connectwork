@@ -12,7 +12,13 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
+import firebase from 'firebase';
+
 const SignUpStudent = (props) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+
   const [year, setYear] = useState(2020);
   const [school, setSchool] = useState('nu');
 
@@ -27,6 +33,15 @@ const SignUpStudent = (props) => {
   };
 
   const signup = () => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     showToast();
     props.navigation.navigate('Login');
   };
@@ -54,18 +69,25 @@ const SignUpStudent = (props) => {
           style={styles.input}
           autoCapitalize='none'
           autoCorrect={false}
+          value={name}
+          onChangeText={(newValue) => setName(newValue)}
         />
-        <Text style={styles.textField}>Username:</Text>
+        <Text style={styles.textField}>Email:</Text>
         <TextInput
           style={styles.input}
           autoCapitalize='none'
           autoCorrect={false}
+          value={email}
+          onChangeText={(newValue) => setEmail(newValue)}
         />
         <Text style={styles.textField}>Password:</Text>
         <TextInput
           style={styles.input}
           autoCapitalize='none'
           autoCorrect={false}
+          value={password}
+          onChangeText={(newValue) => setPassword(newValue)}
+          secureTextEntry
         />
         <Text style={styles.textField}>Univeristy:</Text>
         <DropDownPicker

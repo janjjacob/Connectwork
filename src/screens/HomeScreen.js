@@ -1,16 +1,32 @@
 import React from 'react';
-import {  
+import {
   Text,
   StyleSheet,
   View,
   Image,
   TextInput,
   ScrollView,
-  TouchableOpacity,} from 'react-native';
+  TouchableOpacity,
+  Button,
+} from 'react-native';
 
-const HomeScreen = () => {
+import firebase from 'firebase';
+
+const HomeScreen = ({ navigation }) => {
+  const onLogout = () => {
+    firebase.auth().signOut();
+    navigation.navigate('Login');
+  };
+
   return (
     <View style={styles.container}>
+      <View>
+        <Button
+          title='Go to Settings page'
+          onPress={() => navigation.navigate('Settings')}
+        />
+        <Button title='Logout' onPress={() => onLogout()} />
+      </View>
       <ScrollView style={styles.textFieldContainer}>
         <Text style={styles.textField}>Search: </Text>
         <TextInput
@@ -26,27 +42,32 @@ const HomeScreen = () => {
           source={require('../../assets/ben-lerner.png')}
           style={styles.image}
         />
-        </ScrollView>
+      </ScrollView>
 
-        <View style={styles.altPages}>
-        <TouchableOpacity style={styles.altPages} onPress={()=>{alert("next page")}}>
-          <Image 
-            source={require("../../assets/chat.png")}
+      <View style={styles.altPages}>
+        <TouchableOpacity
+          style={styles.altPages}
+          onPress={() => {
+            alert('next page');
+          }}
+        >
+          <Image
+            source={require('../../assets/chat.png')}
             style={styles.logo}
           />
           <View style={styles.space} />
-          <Image 
-            source={require("../../assets/make-group.png")}
+          <Image
+            source={require('../../assets/make-group.png')}
             style={styles.logo}
           />
           <View style={styles.space} />
-          <Image 
-            source={require("../../assets/add-post.png")}
+          <Image
+            source={require('../../assets/add-post.png')}
             style={styles.logo}
           />
           <View style={styles.space} />
-          <Image 
-            source={require("../../assets/default_pfp.png")}
+          <Image
+            source={require('../../assets/default_pfp.png')}
             style={styles.logo}
           />
         </TouchableOpacity>
@@ -106,10 +127,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   space: {
-    width: 55, 
+    width: 55,
     height: 20,
   },
 });
-
 
 export default HomeScreen;
