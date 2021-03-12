@@ -1,27 +1,110 @@
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import React, { Component } from 'react';
+import { View, Text, Settings } from 'react-native';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './src/screens/LoginScreen';
 import SignUpStudent from './src/screens/SignUpStudent';
 import SignUpCompany from './src/screens/SignUpCompany';
 import HomeScreen from './src/screens/HomeScreen';
 import ForgotUsername from './src/screens/ForgotUsername';
 import ForgotPassword from './src/screens/ForgotPassword';
+import SettingsScreen from './src/screens/SettingsScreen';
 
-const navigator = createStackNavigator(
-  {
-    Login: LoginScreen,
-    SignUpStudent: SignUpStudent,
-    SignUpCompany: SignUpCompany,
-    Home: HomeScreen,
-    ForgotUsername: ForgotUsername,
-    ForgotPassword: ForgotPassword,
-  },
-  {
-    initialRouteName: 'Login',
-    defaultNavigationOptions: {
-      title: 'Untitled Oasis Project',
-    },
+import * as firebase from 'firebase';
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  // config snippet redacted
+  // go to https://console.firebase.google.com/u/0/project/untitled-oasis-project/settings/general/
+  // and copy code under Firebase SDK snippet with Config option selected
+};
+
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+// const navigator = createStackNavigator(
+//   {
+//     Login: LoginScreen,
+//     SignUpStudent: SignUpStudent,
+//     SignUpCompany: SignUpCompany,
+//     Home: HomeScreen,
+//     ForgotUsername: ForgotUsername,
+//     ForgotPassword: ForgotPassword,
+//     Settings: SettingsScreen,
+//   },
+//   {
+//     initialRouteName: 'Login',
+//     defaultNavigationOptions: {
+//       title: 'Untitled Oasis Project',
+//     },
+//   }
+// );
+
+// export default createAppContainer(navigator);
+
+const Stack = createStackNavigator();
+
+export class App extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      loaded: false,
+    };
   }
-);
 
-export default createAppContainer(navigator);
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        this.setState({
+          loggedIn: false,
+          loaded: true,
+        });
+      } else {
+        this.setState({
+          loggedIn: true,
+          loaded: true,
+        });
+      }
+    });
+  }
+  render() {
+    const { loggedIn, loaded } = this.state;
+    if (!loaded) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text>Loading</Text>
+        </View>
+      );
+    }
+
+    if (!loggedIn) {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName='Login'>
+            <Stack.Screen
+              name='Login'
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name='SignUpStudent' component={SignUpStudent} />
+            <Stack.Screen name='SignUpCompany' component={SignUpCompany} />
+            <Stack.Screen name='Home' component={HomeScreen} />
+            <Stack.Screen name='Settings' component={SettingsScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      );
+    }
+
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName='Home'>
+          <Stack.Screen name='Home' component={HomeScreen} />
+          <Stack.Screen name='Login' component={LoginScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+}
+
+export default App;

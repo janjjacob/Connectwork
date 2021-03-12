@@ -6,10 +6,53 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
 
+import firebase from 'firebase';
+
 const LoginScreen = (props) => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const showToast = () => {
+    ToastAndroid.showWithGravityAndOffset(
+      'Logged in successfully!',
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      400
+    );
+  };
+
+  const signin = () => {
+    let status = 'test';
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((result) => {
+        console.log(result);
+        ToastAndroid.showWithGravityAndOffset(
+          'Logged in successfully!',
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          400
+        );
+        props.navigation.navigate('Home');
+      })
+      .catch((error) => {
+        ToastAndroid.showWithGravityAndOffset(
+          'Something went wrong :(',
+          ToastAndroid.LONG,
+          ToastAndroid.BOTTOM,
+          25,
+          400
+        );
+        console.log(error);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -19,11 +62,13 @@ const LoginScreen = (props) => {
         />
       </View>
       <View style={styles.textFieldContainer}>
-        <Text style={styles.textField}>Username:</Text>
+        <Text style={styles.textField}>Email:</Text>
         <TextInput
           style={styles.input}
           autoCapitalize='none'
           autoCorrect={false}
+          value={email}
+          onChangeText={(newValue) => setEmail(newValue)}
         />
         <Text style={styles.textField}>Password:</Text>
         <TextInput
@@ -43,7 +88,7 @@ const LoginScreen = (props) => {
       <View>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => props.navigation.navigate('Home')}
+          onPress={() => signin()}
         >
           <Text style={styles.button}>Login</Text>
         </TouchableOpacity>
