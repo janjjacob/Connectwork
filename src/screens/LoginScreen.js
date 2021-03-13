@@ -11,11 +11,7 @@ import {
 
 import firebase from 'firebase';
 
-<<<<<<< HEAD
 const LoginScreen = ({ navigation }) => {
-=======
-const LoginScreen = (props) => {
->>>>>>> 48fa43df3fb56cd10790e1afde38a6c9b082b8bc
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -30,10 +26,6 @@ const LoginScreen = (props) => {
   };
 
   const signin = () => {
-<<<<<<< HEAD
-=======
-    let status = 'test';
->>>>>>> 48fa43df3fb56cd10790e1afde38a6c9b082b8bc
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -46,11 +38,7 @@ const LoginScreen = (props) => {
           25,
           400
         );
-<<<<<<< HEAD
         navigation.navigate('Home');
-=======
-        props.navigation.navigate('Home');
->>>>>>> 48fa43df3fb56cd10790e1afde38a6c9b082b8bc
       })
       .catch((error) => {
         ToastAndroid.showWithGravityAndOffset(

@@ -14,11 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import firebase from 'firebase';
 
-<<<<<<< HEAD
 const SignUpStudent = ({ navigation }) => {
-=======
-const SignUpStudent = (props) => {
->>>>>>> 48fa43df3fb56cd10790e1afde38a6c9b082b8bc
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -41,7 +37,6 @@ const SignUpStudent = (props) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-<<<<<<< HEAD
         firebase
           .firestore()
           .collection('users')
@@ -53,9 +48,6 @@ const SignUpStudent = (props) => {
             school,
           });
         //console.log(result);
-=======
-        console.log(result);
->>>>>>> 48fa43df3fb56cd10790e1afde38a6c9b082b8bc
       })
       .catch((error) => {
         console.log(error);
