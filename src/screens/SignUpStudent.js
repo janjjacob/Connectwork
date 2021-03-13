@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import firebase from 'firebase';
 
-const SignUpStudent = (props) => {
+const SignUpStudent = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -37,13 +37,23 @@ const SignUpStudent = (props) => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        console.log(result);
+        firebase
+          .firestore()
+          .collection('users')
+          .doc(firebase.auth().currentUser.uid)
+          .set({
+            name,
+            email,
+            year,
+            school,
+          });
+        //console.log(result);
       })
       .catch((error) => {
         console.log(error);
       });
     showToast();
-    props.navigation.navigate('Login');
+    navigation.navigate('Login');
   };
 
   return (
@@ -53,15 +63,6 @@ const SignUpStudent = (props) => {
           source={require('../../assets/default_pfp.png')}
           style={styles.image}
         />
-        {/*<Image
-        source={require('../../assets/active-status.png')}
-        style={{
-          width:20,
-          height: 20, 
-          borderRadius: 20/2
-        }}
-        />
-      */}
       </View>
       <ScrollView style={styles.textFieldContainer}>
         <Text style={styles.textField}>First name, Last Name:</Text>
@@ -172,7 +173,10 @@ const SignUpStudent = (props) => {
         />
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => signup()}
+          onPress={() => {
+            signup();
+            console.log(name);
+          }}
         >
           <Text style={styles.button}>Sign Up</Text>
         </TouchableOpacity>

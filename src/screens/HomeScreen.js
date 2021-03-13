@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   StyleSheet,
@@ -11,11 +11,24 @@ import {
 } from 'react-native';
 
 import firebase from 'firebase';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchUser } from '../../redux/actions/index';
 
 const HomeScreen = ({ navigation }) => {
-  const onLogout = () => {
-    firebase.auth().signOut();
-    navigation.navigate('Login');
+  const fetchUser = (dispatch) => {
+    firebase
+      .firestore()
+      .collection('users')
+      .doc(firebase.auth().currentUser.uid)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.exists) {
+          dispatch({ type: 'USER_STATE_CHANGE', currentUser: snapshot.data() });
+        } else {
+          console.log('does not exist');
+        }
+      });
   };
 
   return (
@@ -23,9 +36,15 @@ const HomeScreen = ({ navigation }) => {
       <View>
         <Button
           title='Go to Settings page'
-          onPress={() => navigation.navigate('Settings')}
+          onPress={() => this.props.navigation.navigate('Settings')}
         />
-        <Button title='Logout' onPress={() => onLogout()} />
+        <Button
+          title='Logout'
+          onPress={() => {
+            firebase.auth().signOut();
+            this.props.navigation.navigate('Login');
+          }}
+        />
       </View>
       <ScrollView style={styles.textFieldContainer}>
         <Text style={styles.textField}>Search: </Text>
@@ -75,6 +94,23 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
+
+// export class HomeScreen extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       email: '',
+//       name: '',
+//       school: '',
+//       year: '',
+//     };
+//   }
+//   componentDidMount() {
+//     this.props.fetchUser();
+//   }
+
+//   render() {}
+// }
 
 const styles = StyleSheet.create({
   container: {
@@ -132,4 +168,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators({ fetchUser }, dispatch),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(HomeScreen);
