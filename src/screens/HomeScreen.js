@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
+=======
+import React from 'react';
+>>>>>>> 48fa43df3fb56cd10790e1afde38a6c9b082b8bc
 import {
   Text,
   StyleSheet,
@@ -11,6 +15,7 @@ import {
 } from 'react-native';
 
 import firebase from 'firebase';
+<<<<<<< HEAD
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchUser } from '../../redux/actions/index';
@@ -29,6 +34,13 @@ const HomeScreen = ({ navigation }) => {
           console.log('does not exist');
         }
       });
+=======
+
+const HomeScreen = ({ navigation }) => {
+  const onLogout = () => {
+    firebase.auth().signOut();
+    navigation.navigate('Login');
+>>>>>>> 48fa43df3fb56cd10790e1afde38a6c9b082b8bc
   };
 
   return (
@@ -36,6 +48,7 @@ const HomeScreen = ({ navigation }) => {
       <View>
         <Button
           title='Go to Settings page'
+<<<<<<< HEAD
           onPress={() => this.props.navigation.navigate('Settings')}
         />
         <Button
@@ -45,6 +58,11 @@ const HomeScreen = ({ navigation }) => {
             this.props.navigation.navigate('Login');
           }}
         />
+=======
+          onPress={() => navigation.navigate('Settings')}
+        />
+        <Button title='Logout' onPress={() => onLogout()} />
+>>>>>>> 48fa43df3fb56cd10790e1afde38a6c9b082b8bc
       </View>
       <ScrollView style={styles.textFieldContainer}>
         <Text style={styles.textField}>Search: </Text>
@@ -168,6 +186,7 @@ const styles = StyleSheet.create({
   },
 });
 
+<<<<<<< HEAD
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({ fetchUser }, dispatch),
@@ -175,3 +194,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(null, mapDispatchToProps)(HomeScreen);
+=======
+export default HomeScreen;
+>>>>>>> 48fa43df3fb56cd10790e1afde38a6c9b082b8bc
