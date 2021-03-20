@@ -1,12 +1,12 @@
+
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import DarkModeToggle from '../components/DarkModeToggle';
+// import DarkModeToggle from '../components/DarkModeToggle';
 
 const SettingsScreen = () => {
   return (
     <View>
       <Text>Settings screen</Text>
-      <DarkModeToggle />
     </View>
   );
 };

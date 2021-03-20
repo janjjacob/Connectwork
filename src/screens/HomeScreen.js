@@ -11,9 +11,6 @@ import {
 } from 'react-native';
 
 import firebase from 'firebase';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchUser } from '../../redux/actions/index';
 
 const HomeScreen = ({ navigation }) => {
   const fetchUser = (dispatch) => {
@@ -36,13 +33,13 @@ const HomeScreen = ({ navigation }) => {
       <View>
         <Button
           title='Go to Settings page'
-          onPress={() => this.props.navigation.navigate('Settings')}
+          onPress={() => navigation.navigate('Settings')}
         />
         <Button
           title='Logout'
           onPress={() => {
             firebase.auth().signOut();
-            this.props.navigation.navigate('Login');
+            navigation.navigate('Login');
           }}
         />
       </View>
@@ -168,10 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators({ fetchUser }, dispatch),
-  };
-}
-
-export default connect(null, mapDispatchToProps)(HomeScreen);
+export default HomeScreen;

@@ -13,10 +13,15 @@ import SettingsScreen from './src/screens/SettingsScreen';
 
 import * as firebase from 'firebase';
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  // config snippet redacted
-  // go to https://console.firebase.google.com/u/0/project/untitled-oasis-project/settings/general/
-  // and copy code under Firebase SDK snippet with Config option selected
+  apiKey: "AIzaSyBYSmwXc4ga5dBQdfeFVdQEMhqUo6N7auY",
+  authDomain: "untitled-oasis-project.firebaseapp.com",
+  projectId: "untitled-oasis-project",
+  storageBucket: "untitled-oasis-project.appspot.com",
+  messagingSenderId: "36325963141",
+  appId: "1:36325963141:web:724186fe298dde6ea4c0ec",
+  measurementId: "G-VPR91JF27V"
 };
 
 if (firebase.apps.length === 0) {
@@ -45,7 +50,18 @@ if (firebase.apps.length === 0) {
 
 const Stack = createStackNavigator();
 
+const getUserData = async () => {
+  firebase
+      .database()
+      .ref('users/' + firebase.auth().currentUser.uid)
+      .once('value')
+      .then(snapshot => {
+        console.log(snapshot.val())
+      });
+}
+
 export class App extends Component {
+
   constructor(props) {
     super();
     this.state = {
@@ -101,6 +117,7 @@ export class App extends Component {
         <Stack.Navigator initialRouteName='Home'>
           <Stack.Screen name='Home' component={HomeScreen} />
           <Stack.Screen name='Login' component={LoginScreen} />
+          <Stack.Screen name='Settings' component={SettingsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
